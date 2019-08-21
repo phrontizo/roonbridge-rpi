@@ -6,6 +6,7 @@ This runs RoonBridge directly, bypassing the `start.sh` script. Logs and other p
 ## Running
 ```
 docker run --detach \
+           --restart always
            --device /dev/snd \
            --net host \
            -v roon_data:/var/roon \
