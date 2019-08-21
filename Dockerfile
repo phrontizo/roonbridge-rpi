@@ -3,6 +3,7 @@ MAINTAINER kiril@phrontizo.com
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
+                    wget \
                     bzip2 \
                     ffmpeg \
                     cifs-utils \
@@ -10,20 +11,22 @@ RUN apt-get update && \
                     libasound2 && \
     rm -rf /var/lib/apt/lists/*
 
-ENV ROON_BRIDGE_URL http://download.roonlabs.com/builds/RoonBridge_linuxarmv7hf.tar.bz2
+ENV ROON_BRIDGE_FILENAME RoonBridge_linuxarmv7hf.tar.bz2
+ENV ROON_BRIDGE_URL http://download.roonlabs.com/builds/${ROON_BRIDGE_FILENAME}
+
 # 63 is the audio group on the host
 ENV ROON_USER 1000:63
 ENV ROON_DATAROOT /var/roon
 
-ADD ${ROON_BRIDGE_URL} /install.tar.bz2
+ADD entrypoint.sh /
 
-RUN tar xjf /install.tar.bz2 && \
-    rm /install.tar.bz2 && \
+RUN mkdir -p /roon && \
     mkdir -p ${ROON_DATAROOT} && \
+    chown ${ROON_USER} /roon && \
     chown ${ROON_USER} ${ROON_DATAROOT}
 
-ENV HOME ${ROON_DATAROOT}
-WORKDIR ${ROON_DATAROOT}
+ENV HOME /roon
+WORKDIR /roon
 USER ${ROON_USER}
 VOLUME ${ROON_DATAROOT}
-ENTRYPOINT /RoonBridge/Bridge/RoonBridge
+ENTRYPOINT /entrypoint.sh
