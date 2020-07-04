@@ -1,9 +1,10 @@
 #!/bin/bash
 
-if [ ! -f ./RoonBridge/Bridge/RoonBridge ]; then
-	wget ${ROON_BRIDGE_URL}
-	tar -xjf ${ROON_BRIDGE_FILENAME}
-	rm ${ROON_BRIDGE_FILENAME}
-fi
+wget ${HIFIBERRY_BASE_URL}/${CONFIGURE_RAAT}
+wget ${HIFIBERRY_BASE_URL}/${RAAT_APP}
+chmod +x ${CONFIGURE_RAAT} && \
+chmod +x ${RAAT_APP} && \
+[ -s /raat/uuid ] || /usr/bin/uuidgen > /raat/uuid
+./${CONFIGURE_RAAT}
 
-exec ./RoonBridge/Bridge/RoonBridge
+exec /raat/${RAAT_APP} /raat/hifiberry_raat.conf
