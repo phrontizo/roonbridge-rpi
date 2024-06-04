@@ -1,5 +1,4 @@
 FROM debian:stable-slim
-MAINTAINER kiril@phrontizo.com
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
