@@ -1,5 +1,5 @@
 # roonbridge-rpi
-Docker file for running The HiFiBerry Roon RAAT endpoint on a Raspberry Pi (tested on LibreElec only, with a HiFiBerry DAC+, using the docker plugin). "dtoverlay=hifiberry-dacplus" must be in your config.txt for this to work.
+Docker file for running The HiFiBerry Roon RAAT endpoint on a Raspberry Pi (tested on a RPi 3B+ running Ubuntu with a HiFiBerry DAC+ only). "dtoverlay=hifiberry-dacplus" must be in your config.txt for this to work.
 
 The entrypoint for this downloads and configures the RAAT components of HiFiBerryOS, then runs raat_app. To upgrade, simply restart the container, which will retain the UUID so Roon keeps working correctly.
 
@@ -13,5 +13,5 @@ docker run --detach \
            --name roonbridge \
            phrontizo/roonbridge-rpi
 ```
-Runs as UID 1000, GID 63 (audio on LibreElec). Needs to run as a UID:GID that has rw access to `/dev/snd` - change as appropriate for your system.
+Runs as UID nobody, GID 29 (audio on Ubuntu and Debian). Needs to run as a GID that has rw access to `/dev/snd` - set the AUDIO_GROUP environment variable to the numeric ID of the audio group as as appropriate for your host system.
 
