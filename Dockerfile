@@ -22,7 +22,7 @@ ENV AUDIO_GROUP=29
 ADD entrypoint.sh /
 
 RUN mkdir -p /raat && \
-    echo 20200527 > /etc/hifiberry.version && \    
+    echo 20230404> /etc/hifiberry.version && \    
     echo 'CURRENT_MIXER_CONTROL="Digital"' > /etc/hifiberry.state && \
     echo > /raat/hifiberry_raat.conf && \
     ln -s /raat/hifiberry_raat.conf /etc/hifiberry_raat.conf && \
